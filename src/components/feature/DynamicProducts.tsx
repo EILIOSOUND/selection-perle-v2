@@ -12,7 +12,7 @@ export default function DynamicProducts() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`${__BASE_PATH__}/products.json`)
+    fetch('/products.json')
       .then(res => {
         if (!res.ok) throw new Error('Erreur de chargement');
         return res.json();
