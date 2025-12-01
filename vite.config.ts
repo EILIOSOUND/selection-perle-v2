@@ -90,5 +90,6 @@ export default defineConfig({
   preview: {
     port: parseInt(env.PORT || "") || 4173,
     host: "0.0.0.0",
+    allowedHosts: ["selection-perle-v2.onrender.com"],
   },
 });
