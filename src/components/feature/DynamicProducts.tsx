@@ -12,7 +12,7 @@ export default function DynamicProducts() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`${__BASE_PATH__}/products.json`)
+    fetch('/products.json')
       .then(res => {
         if (!res.ok) throw new Error('Erreur de chargement');
         return res.json();
@@ -68,7 +68,6 @@ export default function DynamicProducts() {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 lg:px-8">
-        {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
             Dernières pépites
@@ -78,14 +77,12 @@ export default function DynamicProducts() {
           </p>
         </div>
 
-        {/* Products Grid */}
         <div id="product-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product, index) => (
             <div 
               key={index}
               className="product-card bg-white rounded-2xl overflow-hidden border-2 border-gray-200 hover:border-pink-300 hover:shadow-xl transition-all duration-300"
             >
-              {/* Image */}
               <div className="w-full h-64 overflow-hidden bg-gray-50">
                 <img 
                   src={product.img} 
@@ -96,20 +93,17 @@ export default function DynamicProducts() {
                 />
               </div>
               
-              {/* Content */}
               <div className="p-4">
-                {/* Title */}
                 <h3 className="product-title text-base font-semibold text-gray-900 mb-4 line-clamp-2 min-h-[3rem]">
                   {product.title}
                 </h3>
                 
-                {/* Button */}
                 <a
                   href={product.link}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                   className="product-button w-full bg-pink-500 text-white text-center py-3 rounded-xl font-medium hover:bg-pink-600 transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
-                  aria-label={`Voir l\'offre ${product.title}`}
+                  aria-label={"Voir l'offre " + product.title}
                 >
                   Voir l&apos;offre
                   <i className="ri-arrow-right-line" aria-hidden="true"></i>
