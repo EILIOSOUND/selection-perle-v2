@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../../components/feature/Layout';
 import ProductCard from '../../components/feature/ProductCard';
@@ -6,6 +6,8 @@ import DynamicProducts from '../../components/feature/DynamicProducts';
 import { featuredProducts, categories, rgpdItems } from '../../mocks/homeData';
 
 export default function Home() {
+  const [newsletterSuccess, setNewsletterSuccess] = React.useState(false);
+
   useEffect(() => {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'page_view', {
@@ -175,25 +177,44 @@ export default function Home() {
               </p>
 
               {/* Formulaire newsletter */}
-              <form
-                action="https://83475230.sibforms.com/serve/MUIFAKGBnpvxOGN9Jy2_MU5iDJ4QLZlz66-NmEg3u9D8uD33eawdB6cTfMhZnTqy-L_G0Nk8MMRu8Jt4EEbvVYTibvXv3M33Upbu1yaM_S8AGnUvScTopnlBPsD6ndjyZzvw42F9TVFp8ukoQIbQ1hS-yM45MA_6QhoL09dIflob1OPkVs8yvsmSzHnvirepm5w32sCAE38QayYHIA=="
-                method="POST"
-                className="w-full bg-white rounded-[14px] p-4 space-y-3"
-              >
-                <input
-                  type="email"
-                  name="EMAIL"
-                  required
-                  placeholder="Votre adresse email"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition"
+              {newsletterSuccess ? (
+                <div className="w-full bg-white rounded-[14px] p-6 text-center">
+                  <i className="ri-check-line text-3xl text-pink-500 mb-2 block" />
+                  <p className="text-gray-800 font-semibold">Merci, vous êtes inscrit(e) ! 🎉</p>
+                </div>
+              ) : (
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const email = e.target.EMAIL.value;
+                    const formData = new FormData();
+                    formData.append('EMAIL', email);
+                    try {
+                      await fetch(
+                        'https://83475230.sibforms.com/serve/MUIFAKGBnpvxOGN9Jy2_MU5iDJ4QLZlz66-NmEg3u9D8uD33eawdB6cTfMhZnTqy-L_G0Nk8MMRu8Jt4EEbvVYTibvXv3M33Upbu1yaM_S8AGnUvScTopnlBPsD6ndjyZzvw42F9TVFp8ukoQIbQ1hS-yM45MA_6QhoL09dIflob1OPkVs8yvsmSzHnvirepm5w32sCAE38QayYHIA==',
+                        { method: 'POST', body: formData, mode: 'no-cors' }
+                      );
+                    } finally {
+                      setNewsletterSuccess(true);
+                    }
+                  }}
+                  className="w-full bg-white rounded-[14px] p-4 space-y-3"
                 >
-                  S'inscrire
-                </button>
-              </form>
+                  <input
+                    type="email"
+                    name="EMAIL"
+                    required
+                    placeholder="Votre adresse email"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="w-full bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition"
+                  >
+                    S'inscrire
+                  </button>
+                </form>
+              )}
 
               {/* RGPD */}
               <div
