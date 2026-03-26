@@ -192,6 +192,9 @@ export default function Home() {
                     formData.append('EMAIL', email);
 
                     setNewsletterSuccess(true);
+                    setTimeout(() => {
+                      setNewsletterSuccess(false);
+                    }, 4000);
 
                     fetch(
                       'https://83475230.sibforms.com/serve/MUIFAKGBnpvxOGN9Jy2_MU5iDJ4QLZlz66-NmEg3u9D8uD33eawdB6cTfMhZnTqy-L_G0Nk8MMRu8Jt4EEbvVYTibvXv3M33Upbu1yaM_S8AGnUvScTopnlBPsD6ndjyZzvw42F9TVFp8ukoQIbQ1hS-yM45MA_6QhoL09dIflob1OPkVs8yvsmSzHnvirepm5w32sCAE38QayYHIA==',
