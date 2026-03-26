@@ -174,24 +174,26 @@ export default function Home() {
                 Mes meilleures trouvailles directement dans votre boîte mail, avant tout le monde.
               </p>
 
-              {/* Iframe newsletter */}
-              <div className="w-full h-[168px] overflow-hidden relative rounded-[14px] shrink-0">
-                <iframe
-                  src="https://83475230.sibforms.com/serve/MUIFAKGBnpvxOGN9Jy2_MU5iDJ4QLZlz66-NmEg3u9D8uD33eawdB6cTfMhZnTqy-L_G0Nk8MMRu8Jt4EEbvVYTibvXv3M33Upbu1yaM_S8AGnUvScTopnlBPsD6ndjyZzvw42F9TVFp8ukoQIbQ1hS-yM45MA_6QhoL09dIflob1OPkVs8yvsmSzHnvirepm5w32sCAE38QayYHIA=="
-                  scrolling="no"
-                  title="Formulaire newsletter Perle"
-                  style={{
-                    position: 'absolute',
-                    top: '-28px',
-                    left: '-14px',
-                    width: 'calc(100% + 28px)',
-                    height: '280px',
-                    border: 'none',
-                    background: 'transparent',
-                    display: 'block',
-                  }}
+              {/* Formulaire newsletter */}
+              <form
+                action="https://83475230.sibforms.com/serve/MUIFAKGBnpvxOGN9Jy2_MU5iDJ4QLZlz66-NmEg3u9D8uD33eawdB6cTfMhZnTqy-L_G0Nk8MMRu8Jt4EEbvVYTibvXv3M33Upbu1yaM_S8AGnUvScTopnlBPsD6ndjyZzvw42F9TVFp8ukoQIbQ1hS-yM45MA_6QhoL09dIflob1OPkVs8yvsmSzHnvirepm5w32sCAE38QayYHIA=="
+                method="POST"
+                className="w-full bg-white rounded-[14px] p-4 space-y-3"
+              >
+                <input
+                  type="email"
+                  name="EMAIL"
+                  required
+                  placeholder="Votre adresse email"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:outline-none"
                 />
-              </div>
+                <button
+                  type="submit"
+                  className="w-full bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition"
+                >
+                  S'inscrire
+                </button>
+              </form>
 
               {/* RGPD */}
               <div
