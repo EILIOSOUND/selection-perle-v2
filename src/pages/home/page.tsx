@@ -184,19 +184,19 @@ export default function Home() {
                 </div>
               ) : (
                 <form
-                  onSubmit={async (e) => {
+                  onSubmit={(e) => {
                     e.preventDefault();
-                    const email = e.target.EMAIL.value;
+                    const form = e.currentTarget;
+                    const email = form.EMAIL.value;
                     const formData = new FormData();
                     formData.append('EMAIL', email);
-                    try {
-                      await fetch(
-                        'https://83475230.sibforms.com/serve/MUIFAKGBnpvxOGN9Jy2_MU5iDJ4QLZlz66-NmEg3u9D8uD33eawdB6cTfMhZnTqy-L_G0Nk8MMRu8Jt4EEbvVYTibvXv3M33Upbu1yaM_S8AGnUvScTopnlBPsD6ndjyZzvw42F9TVFp8ukoQIbQ1hS-yM45MA_6QhoL09dIflob1OPkVs8yvsmSzHnvirepm5w32sCAE38QayYHIA==',
-                        { method: 'POST', body: formData, mode: 'no-cors' }
-                      );
-                    } finally {
-                      setNewsletterSuccess(true);
-                    }
+
+                    setNewsletterSuccess(true);
+
+                    fetch(
+                      'https://83475230.sibforms.com/serve/MUIFAKGBnpvxOGN9Jy2_MU5iDJ4QLZlz66-NmEg3u9D8uD33eawdB6cTfMhZnTqy-L_G0Nk8MMRu8Jt4EEbvVYTibvXv3M33Upbu1yaM_S8AGnUvScTopnlBPsD6ndjyZzvw42F9TVFp8ukoQIbQ1hS-yM45MA_6QhoL09dIflob1OPkVs8yvsmSzHnvirepm5w32sCAE38QayYHIA==',
+                      { method: 'POST', body: formData, mode: 'no-cors' }
+                    );
                   }}
                   className="w-full bg-white rounded-[14px] p-4 space-y-3"
                 >
