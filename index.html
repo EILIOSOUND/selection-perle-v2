@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>La sélection de Perle – Bien-être et plaisir intime</title>
+    <meta name="description" content="Découvrez ma sélection personnelle des meilleurs produits du web : shopping, bien-être, tech et loisirs. Des trouvailles uniques testées et approuvées pour vous faciliter la vie." />
+    <meta name="keywords" content="sélection produits, shopping en ligne, bien-être, tech, loisirs, produits recommandés" />
+    <meta name="author" content="La sélection de Perle" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="La sélection de Perle – Bien-être et plaisir intime" />
+    <meta property="og:description" content="Découvrez ma sélection personnelle des meilleurs produits du web : shopping, bien-être, tech et loisirs." />
+    <meta property="og:site_name" content="La sélection de Perle" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="La sélection de Perle – Bien-être et plaisir intime" />
+    <meta name="twitter:description" content="Découvrez ma sélection personnelle des meilleurs produits du web : shopping, bien-être, tech et loisirs." />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://laselectiondeperle.com/" />
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css">
+    
+    <!-- Trackers RGPD : déclenchés uniquement après consentement via window.__initTrackers() -->
+    <script>
+      window.__initTrackers = function() {
+        if (window.__trackersLoaded) return;
+        window.__trackersLoaded = true;
+
+        // Google tag (gtag.js)
+        var gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-NWXJBS8ESL';
+        document.head.appendChild(gtagScript);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-NWXJBS8ESL');
+
+        // Meta Pixel
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1263253882582797');
+        fbq('track', 'PageView');
+
+        // Pinterest Tag
+        !function(e){if(!window.pintrk){window.pintrk = function () {
+        window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
+          n=window.pintrk;n.queue=[],n.version="3.0";var
+          t=document.createElement("script");t.async=!0,t.src=e;var
+          r=document.getElementsByTagName("script")[0];
+          r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
+        pintrk('load', '2614465432732');
+        pintrk('page');
+      };
+    </script>
+
+    <script type="module" src="/preview-inject/index.ts"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
