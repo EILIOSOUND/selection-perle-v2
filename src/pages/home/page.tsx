@@ -24,7 +24,7 @@ export default function Home() {
       <section className="relative bg-pink-50 min-h-[600px] flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://static.readdy.ai/image/f64a4f029ff087c4e70229551572bd89/ddc2303c71c1e2a9b77361ab10e7fb01.jpeg"
+            src="/ddc2303c71c1e2a9b77361ab10e7fb01.jpeg"
             alt="Perle - Influenceuse lifestyle et sélection de produits"
             title="La sélection de Perle - Influenceuse"
             loading="eager"
