@@ -152,9 +152,6 @@ export default function ShoppingPage() {
         </div>
       </section>
 
-      {/* Affiliation disclaimer */}
-      <AffiliateDisclaimer />
-
       {/* Products */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 lg:px-8">
@@ -237,6 +234,8 @@ export default function ShoppingPage() {
           </div>
         </div>
       </section>
+      {/* Mention affiliés — en bas de page */}
+      <AffiliateDisclaimer />
     </Layout>
   );
 }
