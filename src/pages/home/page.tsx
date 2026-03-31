@@ -235,7 +235,7 @@ export default function Home() {
             {/* Image Perle */}
             <div className="w-full flex items-end justify-center">
               <img
-                src="https://storage.readdy-site.link/project_files/0f6717d8-5e3c-4a1b-bf84-1c304a7423c6/72dbc214-a0bb-47e5-8bc1-823f1e8c6299_bio_perle01.png?v=72e2dd25c4b0499467b9e7f44bb451f2"
+                src="/bio_perle1.png"
                 alt="À propos de Perle - influenceuse lifestyle"
                 className="w-full h-auto block"
                 style={{ filter: 'drop-shadow(0 10px 36px rgba(0,0,0,0.14))' }}
