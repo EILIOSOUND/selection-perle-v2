@@ -28,7 +28,7 @@ export const shoppingData: Record<string, ShoppingCategoryConfig> = {
     description: 'Découvrez une sélection raffinée de pièces intemporelles et tendances pour sublimer votre style au quotidien.',
     heroBg: 'from-rose-100 via-pink-50 to-white',
     accentColor: 'pink',
-    heroImage: 'https://readdy.ai/api/search-image?query=elegant%20woman%20fashion%20lookbook%20editorial%20photography%2C%20stylish%20outfit%2C%20soft%20pastel%20background%2C%20professional%20fashion%20photography%2C%20high%20end%20clothing%20collection%2C%20minimalist%20aesthetic%2C%20warm%20natural%20light&width=1400&height=600&seq=hero-femme&orientation=landscape',
+    heroImage: '/femme-hero.jpg',
     filters: ['Tout', 'Robes', 'Tops', 'Pantalons', 'Accessoires', 'Chaussures', 'Sacs'],
     products: [
       {
@@ -128,7 +128,7 @@ export const shoppingData: Record<string, ShoppingCategoryConfig> = {
     description: 'Une sélection soigneuse de pièces modernes et intemporelles pour un style masculin affirmé et raffiné.',
     heroBg: 'from-slate-100 via-gray-50 to-white',
     accentColor: 'gray',
-    heroImage: 'https://readdy.ai/api/search-image?query=stylish%20man%20fashion%20editorial%20photography%2C%20modern%20masculine%20outfit%2C%20clean%20minimal%20background%2C%20professional%20fashion%20photography%2C%20high%20end%20menswear%20collection%2C%20sophisticated%20look%2C%20natural%20light%20studio&width=1400&height=600&seq=hero-homme&orientation=landscape',
+    heroImage: '/homme-hero.jpg',
     filters: ['Tout', 'Chemises', 'T-shirts', 'Pantalons', 'Vestes', 'Sneakers', 'Accessoires'],
     products: [
       {
@@ -228,7 +228,7 @@ export const shoppingData: Record<string, ShoppingCategoryConfig> = {
     description: 'Des vêtements colorés, confortables et durables pensés pour le quotidien des petits aventuriers.',
     heroBg: 'from-amber-50 via-orange-50 to-white',
     accentColor: 'orange',
-    heroImage: 'https://readdy.ai/api/search-image?query=colorful%20childrens%20clothing%20collection%20editorial%20photography%2C%20playful%20kids%20fashion%2C%20bright%20colorful%20background%2C%20professional%20fashion%20photography%2C%20cute%20childrens%20outfits%2C%20joyful%20warm%20light%2C%20cheerful%20atmosphere&width=1400&height=600&seq=hero-enfant&orientation=landscape',
+    heroImage: '/enfant-hero.jpg',
     filters: ['Tout', 'Fille', 'Garçon', 'Bébé', 'Pyjamas', 'Chaussures', 'Accessoires'],
     products: [
       {
@@ -328,7 +328,7 @@ export const shoppingData: Record<string, ShoppingCategoryConfig> = {
     description: 'Des pièces intemporelles qui s\'adaptent à tous les styles et toutes les silhouettes, sans distinction.',
     heroBg: 'from-violet-50 via-fuchsia-50 to-white',
     accentColor: 'violet',
-    heroImage: 'https://readdy.ai/api/search-image?query=unisex%20fashion%20editorial%20photography%2C%20gender%20neutral%20clothing%2C%20modern%20minimalist%20style%2C%20diverse%20models%2C%20clean%20studio%20background%2C%20professional%20fashion%20photography%2C%20inclusive%20contemporary%20fashion%20collection&width=1400&height=600&seq=hero-unisexe&orientation=landscape',
+    heroImage: '/unisex-hero.jpg',
     filters: ['Tout', 'Sweats', 'T-shirts', 'Pantalons', 'Vestes', 'Sneakers', 'Accessoires'],
     products: [
       {

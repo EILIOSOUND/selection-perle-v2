@@ -3,7 +3,7 @@ export const featuredProducts = [
     id: 1,
     name: 'Robe élégante à motifs floraux',
     price: 45.99,
-    image: 'https://readdy.ai/api/search-image?query=elegant%20floral%20pattern%20dress%20on%20white%20background%2C%20fashion%20photography%2C%20professional%20product%20shot%2C%20soft%20lighting%2C%20minimalist%20clean%20white%20backdrop&width=400&height=500&seq=prod1&orientation=portrait',
+    image: '/enfant-hero.jpg',
     category: 'Shopping',
     link: 'https://fr.aliexpress.com/item/1005004567890123.html',
   },
