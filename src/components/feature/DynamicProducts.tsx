@@ -1,13 +1,42 @@
 import { useState, useEffect } from 'react';
 
+interface ApiProduct {
+  product_id?: string;
+  title: string;
+  main_image: string;
+  affiliate_link: string;
+  date_generated?: string;
+}
+
 interface Product {
+  id: string;
   title: string;
   img: string;
   link: string;
+  date: number;
 }
 
 const STOREFRONT_URL =
   'https://2d1219ea-d5ad-43c7-81cc-2cfeae9789c2-00-t12cj9iblvwm.spock.replit.dev/api/storefront/products';
+
+function parseDate(value?: string): number {
+  if (!value) return 0;
+
+  // ISO
+  const iso = new Date(value).getTime();
+  if (!Number.isNaN(iso)) return iso;
+
+  // DD/MM/YYYY ou DD/MM/YYYY HH:mm:ss
+  const match = value.match(
+    /^(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}):(\d{2}):(\d{2}))?$/
+  );
+
+  if (!match) return 0;
+
+  const [, dd, mm, yyyy, hh = '00', min = '00', ss = '00'] = match;
+
+  return new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}`).getTime();
+}
 
 export default function DynamicProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -20,13 +49,20 @@ export default function DynamicProducts() {
         if (!res.ok) throw new Error('Erreur de chargement');
         return res.json();
       })
-      .then((data: { products: { title: string; main_image: string; affiliate_link: string }[] }) => {
-        const mapped: Product[] = (data.products ?? []).map(p => ({
+      .then((data: { products?: ApiProduct[] }) => {
+        const mapped: Product[] = (data.products ?? []).map((p, index) => ({
+          id: p.product_id || `${p.title}-${index}`,
           title: p.title,
           img: p.main_image,
           link: p.affiliate_link,
+          date: parseDate(p.date_generated),
         }));
-        setProducts(mapped);
+
+        const latest = mapped
+          .sort((a, b) => b.date - a.date)
+          .slice(0, 4);
+
+        setProducts(latest);
         setLoading(false);
       })
       .catch(err => {
@@ -81,31 +117,31 @@ export default function DynamicProducts() {
             Dernières pépites
           </h2>
           <p className="text-gray-600 text-base">
-            Mes nouvelles trouvailles à ne pas manquer
+            Mes 4 dernières trouvailles à ne pas manquer
           </p>
         </div>
 
         <div id="product-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product, index) => (
-            <div 
-              key={index}
+          {products.map(product => (
+            <div
+              key={product.id}
               className="product-card bg-white rounded-2xl overflow-hidden border-2 border-gray-200 hover:border-pink-300 hover:shadow-xl transition-all duration-300"
             >
               <div className="w-full h-64 overflow-hidden bg-gray-50">
-                <img 
-                  src={product.img} 
+                <img
+                  src={product.img}
                   alt={product.title}
                   title={product.title}
                   className="product-image w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
               </div>
-              
+
               <div className="p-4">
                 <h3 className="product-title text-base font-semibold text-gray-900 mb-4 line-clamp-2 min-h-[3rem]">
                   {product.title}
                 </h3>
-                
+
                 <a
                   href={product.link}
                   target="_blank"
