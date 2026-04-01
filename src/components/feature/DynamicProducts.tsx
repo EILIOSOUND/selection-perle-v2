@@ -6,19 +6,27 @@ interface Product {
   link: string;
 }
 
+const STOREFRONT_URL =
+  'https://2d1219ea-d5ad-43c7-81cc-2cfeae9789c2-00-t12cj9iblvwm.spock.replit.dev/api/storefront/products';
+
 export default function DynamicProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/products.json')
+    fetch(STOREFRONT_URL)
       .then(res => {
         if (!res.ok) throw new Error('Erreur de chargement');
         return res.json();
       })
-      .then((data: Product[]) => {
-        setProducts(data);
+      .then((data: { products: { title: string; main_image: string; affiliate_link: string }[] }) => {
+        const mapped: Product[] = (data.products ?? []).map(p => ({
+          title: p.title,
+          img: p.main_image,
+          link: p.affiliate_link,
+        }));
+        setProducts(mapped);
         setLoading(false);
       })
       .catch(err => {
