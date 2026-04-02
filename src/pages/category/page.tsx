@@ -1,14 +1,9 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../../components/feature/Layout';
 import AffiliateDisclaimer from '../../components/feature/AffiliateDisclaimer';
-import ProductCard from '../../components/feature/ProductCard';
-import { categoryData } from '../../mocks/categoryData';
+import CategoryProducts from '../../components/feature/CategoryProducts';
 import { trackFbq, trackGtag } from '../../utils/tracking';
-
-// ---------------------------------------------------------------------------
-// Static data — outside the component so they are not recreated on each render
-// ---------------------------------------------------------------------------
 
 const categoryConfig: Record<
   string,
@@ -20,6 +15,7 @@ const categoryConfig: Record<
     subtitle: string;
     bgColor: string;
     heroBg: string;
+    filters: string[];
   }
 > = {
   shopping: {
@@ -30,6 +26,7 @@ const categoryConfig: Record<
     subtitle: 'Mode & Accessoires',
     bgColor: 'bg-pink-50',
     heroBg: 'from-pink-100 via-pink-50 to-white',
+    filters: ['Tout', 'Vêtements', 'Accessoires', 'Bijoux', 'Chaussures', 'Montres'],
   },
   'bien-etre': {
     name: 'Bien-être',
@@ -39,6 +36,7 @@ const categoryConfig: Record<
     subtitle: 'Beauté & Santé',
     bgColor: 'bg-purple-50',
     heroBg: 'from-purple-100 via-purple-50 to-white',
+    filters: ['Tout', 'Soins visage', 'Beauté', 'Fitness', 'Aromathérapie', 'Nutrition'],
   },
   tech: {
     name: 'Tech',
@@ -48,6 +46,7 @@ const categoryConfig: Record<
     subtitle: 'Gadgets & Électronique',
     bgColor: 'bg-cyan-50',
     heroBg: 'from-cyan-100 via-cyan-50 to-white',
+    filters: ['Tout', 'Audio', 'Smartphones', 'Maison connectée', 'Gaming', 'Gadgets'],
   },
   loisirs: {
     name: 'Loisirs',
@@ -57,6 +56,7 @@ const categoryConfig: Record<
     subtitle: 'Jeux & Détente',
     bgColor: 'bg-orange-50',
     heroBg: 'from-orange-100 via-orange-50 to-white',
+    filters: ['Tout', 'Jeux', 'Voyage', 'Lecture', 'Sport', 'Créativité'],
   },
 };
 
@@ -65,21 +65,16 @@ const allCategories = Object.entries(categoryConfig).map(([slug, cfg]) => ({
   ...cfg,
 }));
 
-// ---------------------------------------------------------------------------
-
 export default function Category() {
   const { slug } = useParams<{ slug: string }>();
-  const [activeFilter, setActiveFilter] = useState('Tout');
+  const [activeFilter, setActiveFilter] = useState<string | undefined>(undefined);
 
   const currentSlug = slug || 'shopping';
   const currentCategory = categoryConfig[currentSlug] || categoryConfig.shopping;
-  const currentData = categoryData[currentSlug] || categoryData.shopping;
-  const filters = currentData.filters;
-  const allProducts = currentData.products;
+  const filters = currentCategory.filters;
 
-  // Reset filter when slug changes
   useEffect(() => {
-    setActiveFilter('Tout');
+    setActiveFilter(undefined);
   }, [slug]);
 
   useEffect(() => {
@@ -103,14 +98,8 @@ export default function Category() {
     });
   }, [slug, currentCategory]);
 
-  const filteredProducts = useMemo(() => {
-    if (activeFilter === 'Tout') return allProducts;
-    return allProducts.filter((p) => p.subCategory === activeFilter);
-  }, [allProducts, activeFilter]);
-
   return (
     <Layout>
-      {/* Hero Section */}
       <section className={`bg-gradient-to-br ${currentCategory.heroBg} py-12`}>
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center gap-6">
@@ -128,7 +117,6 @@ export default function Category() {
         </div>
       </section>
 
-      {/* Category Navigation Banner */}
       <nav className="bg-white border-b border-gray-200" aria-label="Navigation des catégories">
         <div className="container mx-auto px-4 lg:px-8 py-8">
           <div className="grid grid-cols-4 gap-4">
@@ -168,7 +156,6 @@ export default function Category() {
         </div>
       </nav>
 
-      {/* Filters */}
       <section className="bg-white border-b border-gray-100">
         <div className="container mx-auto px-4 lg:px-8 py-4">
           <div className="flex items-center gap-2">
@@ -180,13 +167,13 @@ export default function Category() {
               {filters.map((filter) => (
                 <button
                   key={filter}
-                  onClick={() => setActiveFilter(filter)}
+                  onClick={() => setActiveFilter(filter === 'Tout' ? undefined : filter)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer whitespace-nowrap ${
-                    activeFilter === filter
+                    (activeFilter ?? 'Tout') === filter
                       ? 'bg-gray-900 text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
-                  aria-pressed={activeFilter === filter}
+                  aria-pressed={(activeFilter ?? 'Tout') === filter}
                   aria-label={`Filtrer par ${filter}`}
                 >
                   {filter}
@@ -197,52 +184,23 @@ export default function Category() {
         </div>
       </section>
 
-      {/* Products Count */}
       <section className="bg-gray-50 py-4">
         <div className="container mx-auto px-4 lg:px-8">
-          <p className="text-sm text-gray-600" role="status" aria-live="polite">
-            {filteredProducts.length} produit{filteredProducts.length > 1 ? 's' : ''} trouvé
-            {filteredProducts.length > 1 ? 's' : ''}
+          <p className="text-sm text-gray-600">
+            Produits filtrés par catégorie{activeFilter ? ` : ${activeFilter}` : ''}
           </p>
         </div>
       </section>
 
-      {/* Products Grid */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 lg:px-8">
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  image={product.image}
-                  category={product.category}
-                  title={product.name}
-                  price={product.price}
-                  originalPrice={product.originalPrice}
-                  discount={parseInt(product.discount)}
-                  link={product.link}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20">
-              <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <i className="ri-inbox-2-line text-5xl text-gray-300" aria-hidden="true"></i>
-              </div>
-              <p className="text-gray-500 text-lg">Aucun produit dans cette sous-catégorie.</p>
-              <button
-                onClick={() => setActiveFilter('Tout')}
-                className="mt-4 px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium cursor-pointer whitespace-nowrap hover:bg-gray-700 transition-all"
-              >
-                Voir tous les produits
-              </button>
-            </div>
-          )}
+          <CategoryProducts
+            category={currentSlug}
+            subCategory={activeFilter}
+          />
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-2xl mx-auto">
@@ -265,7 +223,7 @@ export default function Category() {
           </div>
         </div>
       </section>
-      {/* Mention affiliés — en bas de page */}
+
       <AffiliateDisclaimer />
     </Layout>
   );

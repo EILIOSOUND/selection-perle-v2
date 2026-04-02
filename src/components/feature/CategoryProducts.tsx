@@ -1,29 +1,33 @@
 import { useState, useEffect } from 'react';
 
+interface ApiProduct {
+  product_id?: string;
+  title: string;
+  main_image: string;
+  affiliate_link: string;
+  category?: string;
+  subCategory?: string;
+  sub_category?: string;
+}
+
 interface Product {
+  id: string;
   title: string;
   img: string;
   link: string;
-  date_generated?: string;
+  category: string;
+  subCategory: string;
+}
+
+interface Props {
+  category: string;
+  subCategory?: string;
 }
 
 const STOREFRONT_URL =
   'https://2d1219ea-d5ad-43c7-81cc-2cfeae9789c2-00-t12cj9iblvwm.spock.replit.dev/api/storefront/products';
 
-// Gère ISO 8601 ("2026-03-29T00:39:33.761Z") et DD/MM/YYYY ("29/03/2026")
-function parseDateMs(raw: string | undefined): number {
-  if (!raw) return 0;
-
-  const ddmmyyyy = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(raw);
-  if (ddmmyyyy) {
-    const [, dd, mm, yyyy] = ddmmyyyy;
-    return new Date(`${yyyy}-${mm}-${dd}T00:00:00.000Z`).getTime();
-  }
-
-  return new Date(raw).getTime() || 0;
-}
-
-export default function DynamicProducts() {
+export default function CategoryProducts({ category, subCategory }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,39 +38,35 @@ export default function DynamicProducts() {
         if (!res.ok) throw new Error('Erreur de chargement');
         return res.json();
       })
-      .then((data: { products?: { title: string; main_image: string; affiliate_link: string; date_generated?: string }[] }) => {
-        const mapped: Product[] = (data.products ?? []).map(p => ({
+      .then((data: { products?: ApiProduct[] }) => {
+        const all: Product[] = (data.products ?? []).map((p, index) => ({
+          id: p.product_id || `${p.title}-${index}`,
           title: p.title,
           img: p.main_image,
           link: p.affiliate_link,
-          date_generated: p.date_generated,
+          category: p.category || '',
+          subCategory: p.subCategory || p.sub_category || '',
         }));
 
-        const latest = [...mapped]
-          .sort((a, b) => parseDateMs(b.date_generated) - parseDateMs(a.date_generated))
-          .slice(0, 4);
+        const filtered = all.filter(p => {
+          const matchCat = p.category === category;
+          const matchSub = subCategory ? p.subCategory === subCategory : true;
+          return matchCat && matchSub;
+        });
 
-        setProducts(latest);
+        setProducts(filtered);
         setLoading(false);
       })
       .catch(err => {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  }, [category, subCategory]);
 
   if (loading) {
     return (
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
-              Produits dynamiques
-            </h2>
-            <p className="text-gray-600 text-base">
-              Chargement en cours...
-            </p>
-          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...Array(4)].map((_, i) => (
               <div key={i} className="bg-gray-100 rounded-2xl h-96 animate-pulse"></div>
@@ -96,19 +96,10 @@ export default function DynamicProducts() {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
-            Dernières pépites
-          </h2>
-          <p className="text-gray-600 text-base">
-            Mes nouvelles trouvailles à ne pas manquer
-          </p>
-        </div>
-
-        <div id="product-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.map(product => (
             <div
-              key={index}
+              key={product.id}
               className="product-card bg-white rounded-2xl overflow-hidden border-2 border-gray-200 hover:border-pink-300 hover:shadow-xl transition-all duration-300"
             >
               <div className="w-full h-64 overflow-hidden bg-gray-50">
