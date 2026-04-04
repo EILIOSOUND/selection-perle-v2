@@ -50,7 +50,7 @@ export default function Home() {
             </p>
 
             <Link
-              to="/category/shopping"
+              to="/shopping"
               className="inline-flex items-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl whitespace-nowrap cursor-pointer"
               aria-label="Explorer la sélection de produits"
             >
@@ -106,7 +106,7 @@ export default function Home() {
               <p className="text-gray-600">Les produits que j&apos;adore en ce moment</p>
             </div>
             <Link
-              to="/category/shopping"
+              to="/shopping"
               className="hidden md:inline-flex items-center gap-2 text-pink-500 font-medium hover:gap-3 transition-all cursor-pointer whitespace-nowrap"
               aria-label="Voir tous les produits"
             >
@@ -132,7 +132,7 @@ export default function Home() {
 
           <div className="text-center mt-12 md:hidden">
             <Link
-              to="/category/shopping"
+              to="/shopping"
               className="inline-flex items-center gap-2 text-pink-500 font-medium cursor-pointer whitespace-nowrap"
               aria-label="Voir tous les produits"
             >

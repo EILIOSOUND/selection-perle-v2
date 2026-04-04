@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import CookieConsent from './CookieConsent';
 
@@ -38,7 +38,7 @@ function ShoppingDropdown() {
   const ref = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const isActive = location.pathname.startsWith('/shopping') || location.pathname === '/category/shopping';
+  const isActive = location.pathname.startsWith('/shopping') || location.pathname === '/shopping';
 
   const handleMouseEnter = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -129,7 +129,7 @@ function ShoppingDropdown() {
           </div>
           <div className="px-6 pb-4 pt-1 border-t border-white/6">
             <Link
-              to="/category/shopping"
+              to="/shopping"
               className="flex items-center justify-center gap-2 text-xs text-white/40 hover:text-pink-400 transition-colors cursor-pointer py-1"
             >
               Voir tout le shopping
