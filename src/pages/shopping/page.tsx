@@ -1,8 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../../components/feature/Layout';
 import AffiliateDisclaimer from '../../components/feature/AffiliateDisclaimer';
-import ProductCard from '../../components/feature/ProductCard';
+import CategoryProducts from '../../components/feature/CategoryProducts';
 import { shoppingData } from '../../mocks/shoppingData';
 
 const subNavLinks = [
@@ -43,7 +43,7 @@ export default function ShoppingPage() {
   const { gender } = useParams<{ gender: string }>();
   const [activeFilter, setActiveFilter] = useState('Tout');
 
-  const currentGender = (gender && shoppingData[gender]) ? gender : 'femme';
+  const currentGender = gender && shoppingData[gender] ? gender : 'femme';
   const config = shoppingData[currentGender];
   const accent = accentMap[config.accentColor] || accentMap.pink;
 
@@ -59,10 +59,7 @@ export default function ShoppingPage() {
     }
   }, [config]);
 
-  const filteredProducts = useMemo(() => {
-    if (activeFilter === 'Tout') return config.products;
-    return config.products.filter((p) => p.subCategory === activeFilter);
-  }, [config.products, activeFilter]);
+  const selectedSubCategory = activeFilter === 'Tout' ? undefined : activeFilter;
 
   return (
     <Layout>
@@ -76,7 +73,9 @@ export default function ShoppingPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10" />
         <div className="relative z-10 w-full container mx-auto px-4 lg:px-8 pb-12">
-          <div className={`inline-flex items-center gap-2 ${accent.pill} px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide mb-4`}>
+          <div
+            className={`inline-flex items-center gap-2 ${accent.pill} px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide mb-4`}
+          >
             <i className="ri-shopping-bag-3-line" />
             <span>La sélection de Perle</span>
           </div>
@@ -90,7 +89,10 @@ export default function ShoppingPage() {
       </section>
 
       {/* Sub-nav */}
-      <nav className="bg-white border-b border-gray-100 sticky top-[129px] z-30" aria-label="Sous-navigation Shopping">
+      <nav
+        className="bg-white border-b border-gray-100 sticky top-[129px] z-30"
+        aria-label="Sous-navigation Shopping"
+      >
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center gap-1 overflow-x-auto py-4">
             {subNavLinks.map((link) => {
@@ -100,9 +102,7 @@ export default function ShoppingPage() {
                   key={link.gender}
                   to={`/shopping/${link.gender}`}
                   className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all cursor-pointer ${
-                    isActive
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-600 hover:bg-gray-100'
+                    isActive ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-100'
                   }`}
                   aria-current={isActive ? 'page' : undefined}
                 >
@@ -127,6 +127,7 @@ export default function ShoppingPage() {
               </span>
               <span className="text-sm font-medium text-gray-700 whitespace-nowrap">Filtrer :</span>
             </div>
+
             <div className="flex items-center gap-2 flex-wrap" role="group" aria-label="Filtres de produits">
               {config.filters.map((filter) => (
                 <button
@@ -143,49 +144,16 @@ export default function ShoppingPage() {
                 </button>
               ))}
             </div>
-            <div className="ml-auto">
-              <span className="text-xs text-gray-400 whitespace-nowrap">
-                {filteredProducts.length} article{filteredProducts.length > 1 ? 's' : ''}
-              </span>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Products */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4 lg:px-8">
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  image={product.image}
-                  category={product.category}
-                  title={product.name}
-                  price={product.price}
-                  originalPrice={product.originalPrice}
-                  discount={product.discount}
-                  link={product.link}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20">
-              <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <i className="ri-inbox-2-line text-5xl text-gray-300" />
-              </div>
-              <p className="text-gray-500 text-lg">Aucun produit dans cette sous-catégorie.</p>
-              <button
-                onClick={() => setActiveFilter('Tout')}
-                className="mt-4 px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium cursor-pointer whitespace-nowrap hover:bg-gray-700 transition-all"
-              >
-                Voir tous les produits
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
+      {/* Produits dynamiques depuis API Replit */}
+      <CategoryProducts
+        category="shopping"
+        audience={currentGender}
+        subCategory={selectedSubCategory}
+      />
 
       {/* Autres catégories Shopping */}
       <section className="py-14 bg-white">
@@ -202,7 +170,9 @@ export default function ShoppingPage() {
                     to={`/shopping/${link.gender}`}
                     className="relative overflow-hidden rounded-2xl border-2 border-gray-100 hover:border-gray-200 hover:scale-105 transition-all duration-300 cursor-pointer p-6 flex flex-col items-center gap-3 bg-white"
                   >
-                    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${ac.icon} flex items-center justify-center`}>
+                    <div
+                      className={`w-12 h-12 rounded-full bg-gradient-to-br ${ac.icon} flex items-center justify-center`}
+                    >
                       <i className={`${link.icon} text-xl text-white`} />
                     </div>
                     <span className="text-sm font-semibold text-gray-900">{link.label}</span>
@@ -234,7 +204,7 @@ export default function ShoppingPage() {
           </div>
         </div>
       </section>
-      {/* Mention affiliés — en bas de page */}
+
       <AffiliateDisclaimer />
     </Layout>
   );

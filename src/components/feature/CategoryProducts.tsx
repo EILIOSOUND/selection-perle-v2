@@ -8,6 +8,7 @@ interface ApiProduct {
   category?: string;
   subCategory?: string;
   sub_category?: string;
+  audience?: string;
 }
 
 interface Product {
@@ -17,17 +18,19 @@ interface Product {
   link: string;
   category: string;
   subCategory: string;
+  audience: string;
 }
 
 interface Props {
   category: string;
   subCategory?: string;
+  audience?: string;
 }
 
 const STOREFRONT_URL =
   'https://2d1219ea-d5ad-43c7-81cc-2cfeae9789c2-00-t12cj9iblvwm.spock.replit.dev/api/storefront/products';
 
-export default function CategoryProducts({ category, subCategory }: Props) {
+export default function CategoryProducts({ category, subCategory, audience }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,12 +49,15 @@ export default function CategoryProducts({ category, subCategory }: Props) {
           link: p.affiliate_link,
           category: p.category || '',
           subCategory: p.subCategory || p.sub_category || '',
+          audience: p.audience || 'unisexe',
         }));
 
         const filtered = all.filter(p => {
           const matchCat = p.category === category;
           const matchSub = subCategory ? p.subCategory === subCategory : true;
-          return matchCat && matchSub;
+          const matchAudience = audience ? p.audience === audience : true;
+
+          return matchCat && matchSub && matchAudience;
         });
 
         setProducts(filtered);
@@ -61,37 +67,11 @@ export default function CategoryProducts({ category, subCategory }: Props) {
         setError(err.message);
         setLoading(false);
       });
-  }, [category, subCategory]);
+  }, [category, subCategory, audience]);
 
-  if (loading) {
-    return (
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-gray-100 rounded-2xl h-96 animate-pulse"></div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center">
-            <p className="text-red-500">Erreur : {error}</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (products.length === 0) {
-    return null;
-  }
+  if (loading) return null;
+  if (error) return null;
+  if (products.length === 0) return null;
 
   return (
     <section className="py-16 bg-white">
@@ -106,25 +86,22 @@ export default function CategoryProducts({ category, subCategory }: Props) {
                 <img
                   src={product.img}
                   alt={product.title}
-                  title={product.title}
-                  className="product-image w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
 
               <div className="p-4">
-                <h3 className="product-title text-base font-semibold text-gray-900 mb-4 line-clamp-2 min-h-[3rem]">
+                <h3 className="text-base font-semibold text-gray-900 mb-4 line-clamp-2">
                   {product.title}
                 </h3>
 
                 <a
                   href={product.link}
                   target="_blank"
-                  rel="noopener noreferrer nofollow"
-                  className="product-button w-full bg-pink-500 text-white text-center py-3 rounded-xl font-medium hover:bg-pink-600 transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
+                  rel="noopener noreferrer"
+                  className="w-full bg-pink-500 text-white text-center py-3 rounded-xl font-medium hover:bg-pink-600 transition-colors flex items-center justify-center gap-2"
                 >
-                  Voir l&apos;offre
-                  <i className="ri-arrow-right-line"></i>
+                  Voir l’offre
                 </a>
               </div>
             </div>
