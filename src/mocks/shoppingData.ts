@@ -383,7 +383,7 @@ export const shoppingData: Record<string, ShoppingCategoryConfig> = {
         discount: 32,
         image: 'https://readdy.ai/api/search-image?query=chunky%20thick%20sole%20sneakers%20product%20photography%20on%20white%20background%2C%20unisex%20footwear%20fashion%2C%20professional%20product%20shot%2C%20soft%20lighting%2C%20clean%20minimal%20backdrop&width=400&height=500&seq=u5&orientation=portrait',
         category: 'Shopping Unisexe',
-        subCategory: 'Sneakers',
+        subCategory: 'chaussures',
         link: 'https://fr.aliexpress.com/item/1005004000005.html',
       },
       {
