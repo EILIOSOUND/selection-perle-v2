@@ -30,6 +30,15 @@ interface Props {
 const STOREFRONT_URL =
   'https://2d1219ea-d5ad-43c7-81cc-2cfeae9789c2-00-t12cj9iblvwm.spock.replit.dev/api/storefront/products';
 
+const SHOE_GROUP = [
+  'Sneakers',
+  'Bottes',
+  'Sandales',
+  'Chaussons',
+  'Chaussures de ville',
+  'Chaussures',
+];
+
 export default function CategoryProducts({ category, subCategory, audience }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,7 +63,16 @@ export default function CategoryProducts({ category, subCategory, audience }: Pr
 
         const filtered = all.filter(p => {
           const matchCat = p.category === category;
-          const matchSub = subCategory ? p.subCategory === subCategory : true;
+
+          let matchSub = true;
+          if (subCategory) {
+            if (subCategory === 'Chaussures') {
+              matchSub = SHOE_GROUP.includes(p.subCategory);
+            } else {
+              matchSub = p.subCategory === subCategory;
+            }
+          }
+
           const matchAudience = audience ? p.audience === audience : true;
 
           return matchCat && matchSub && matchAudience;

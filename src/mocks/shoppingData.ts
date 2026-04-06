@@ -129,7 +129,7 @@ export const shoppingData: Record<string, ShoppingCategoryConfig> = {
     heroBg: 'from-slate-100 via-gray-50 to-white',
     accentColor: 'gray',
     heroImage: '/homme-hero.jpg',
-    filters: ['Tout', 'Chemises', 'T-shirts', 'Pantalons', 'Vestes', 'Sneakers', 'Accessoires'],
+    filters: ['Tout', 'Chemises', 'T-shirts', 'Pantalons', 'Vestes', 'Chaussures', 'Accessoires'],
     products: [
       {
         id: 201,
@@ -183,7 +183,7 @@ export const shoppingData: Record<string, ShoppingCategoryConfig> = {
         discount: 33,
         image: 'https://readdy.ai/api/search-image?query=white%20leather%20minimalist%20sneakers%20shoes%20product%20photography%20on%20white%20background%2C%20mens%20footwear%20fashion%2C%20professional%20product%20shot%2C%20soft%20lighting%2C%20clean%20minimal%20backdrop&width=400&height=500&seq=h5&orientation=portrait',
         category: 'Shopping Homme',
-        subCategory: 'Sneakers',
+        subCategory: 'Chaussures',
         link: 'https://fr.aliexpress.com/item/1005002000005.html',
       },
       {
@@ -329,7 +329,7 @@ export const shoppingData: Record<string, ShoppingCategoryConfig> = {
     heroBg: 'from-violet-50 via-fuchsia-50 to-white',
     accentColor: 'violet',
     heroImage: '/unisex-hero.jpg',
-    filters: ['Tout', 'Sweats', 'T-shirts', 'Pantalons', 'Vestes', 'Sneakers', 'Accessoires'],
+    filters: ['Tout', 'Sweats', 'T-shirts', 'Pantalons', 'Vestes', 'Chaussures', 'Accessoires'],
     products: [
       {
         id: 401,
