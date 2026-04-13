@@ -125,7 +125,7 @@ export default function Category() {
               return (
                 <Link
                   key={cat.slug}
-                  to={`/category/${cat.slug}`}
+                  to={cat.slug === "shopping" ? "/shopping" : `/category/${cat.slug}`}
                   className={`relative flex flex-col items-center justify-center gap-3 py-6 rounded-2xl transition-all duration-300 cursor-pointer overflow-hidden ${
                     isActive
                       ? `bg-gradient-to-br ${cat.gradient} text-white shadow-lg`
