@@ -14,10 +14,11 @@ const STOREFRONT_URL =
 function parseDateMs(raw: string | undefined): number {
   if (!raw) return 0;
 
-  const ddmmyyyy = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(raw);
-  if (ddmmyyyy) {
-    const [, dd, mm, yyyy] = ddmmyyyy;
-    return new Date(`${yyyy}-${mm}-${dd}T00:00:00.000Z`).getTime();
+  // Format DD/MM/YYYY HH:MM:SS
+  const full = /^(\d{2})\/(\d{2})\/(\d{4})[ ,](\d{2}):(\d{2}):(\d{2})$/.exec(raw);
+  if (full) {
+    const [, dd, mm, yyyy, hh, min, ss] = full;
+    return new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}Z`).getTime();
   }
 
   return new Date(raw).getTime() || 0;
