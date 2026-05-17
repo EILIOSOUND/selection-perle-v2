@@ -24,7 +24,7 @@ export default function ProductImageGallery({
           src={selectedImage}
           alt={title}
           title={title}
-          className="product-image w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+          className="product-image w-full h-full object-contain object-center bg-white p-2 transition-transform duration-300"
           loading="lazy"
         />
       </div>
