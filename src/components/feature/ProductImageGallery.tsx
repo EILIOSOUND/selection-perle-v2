@@ -44,7 +44,7 @@ export default function ProductImageGallery({
               <img
                 src={image}
                 alt=""
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-contain object-center bg-white p-1"
                 loading="lazy"
               />
             </button>
